@@ -18,42 +18,39 @@ public class ChatClient {
         }
 
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
+        SwingUtilities.invokeLater(() -> {
 
 
-                ServerConnectionSettingsDialog settingsDialog = new ServerConnectionSettingsDialog(null);
-                settingsDialog.setVisible(true);
+            ServerConnectionSettingsDialog settingsDialog = new ServerConnectionSettingsDialog(null);
+            settingsDialog.setVisible(true);
 
-                // Get server port and address from dialog
-                String serverAddress = settingsDialog.getServerAddress();
-                int serverPort = settingsDialog.getServerPort();
+            // Get server port and address from dialog
+            String serverAddress = settingsDialog.getServerAddress();
+            int serverPort = settingsDialog.getServerPort();
 
-                // Check if the user has cancelled the dialog.
-                if (serverAddress == null || serverPort == -1) {
-                    System.exit(0);
-                }
-
-                // Attempt to connect to the server.
-                try {
-                    ServerConnection serverConnection = new ServerConnection(serverAddress, serverPort);
-                    if (serverConnection.getSocket() != null){
-                        // If the socket has been established...
-                        ChatGUI chatGUI = new ChatGUI(serverConnection);
-
-
-                    }else {
-                        JOptionPane.showMessageDialog(null, "An error has occurred when connecting to the server");
-                        System.exit(0);
-                    }
-                } catch (IOException e) {
-                    // Show message box when connection fails.
-                    JOptionPane.showMessageDialog(null, "An error has occurred when connecting to the server " + e.getMessage());
-                    System.exit(0);
-                }
-
+            // Check if the user has cancelled the dialog.
+            if (serverAddress == null || serverPort == -1) {
+                System.exit(0);
             }
+
+            // Attempt to connect to the server.
+            try {
+                ServerConnection serverConnection = new ServerConnection(serverAddress, serverPort);
+                if (serverConnection.getSocket() != null){
+                    // If the socket has been established...
+                    new ChatGUI(serverConnection);
+
+
+                }else {
+                    JOptionPane.showMessageDialog(null, "An error has occurred when connecting to the server");
+                    System.exit(0);
+                }
+            } catch (IOException e) {
+                // Show message box when connection fails.
+                JOptionPane.showMessageDialog(null, "An error has occurred when connecting to the server " + e.getMessage());
+                System.exit(0);
+            }
+
         });
     }
 

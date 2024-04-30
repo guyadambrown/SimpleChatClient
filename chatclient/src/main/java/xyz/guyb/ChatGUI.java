@@ -7,22 +7,21 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class ChatGUI {
 
 
-    private JFrame frame;
-    private JTextArea chatArea;
-    private JTextField messageInputField;
-    private JPanel topStatusPanel;
-    private JLabel usernameDisplayLabel;
-    private UserInteraction userInteraction;
+    private final JTextArea chatArea;
+    private final JTextField messageInputField;
+
+    private final UserInteraction userInteraction;
 
     public ChatGUI(ServerConnection serverConnection) {
         UserInteraction userInteraction = new UserInteraction(serverConnection, this);
         this.userInteraction = userInteraction;
-        frame = new JFrame("Chat Client");
+        JFrame frame = new JFrame("Chat Client");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,500);
 
@@ -47,8 +46,6 @@ public class ChatGUI {
         // Create send button for sending messages.
         JButton sendButton = new JButton("Send");
 
-        // Create file upload button for sending files.
-        JButton fileUpload = new JButton("Upload");
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -56,21 +53,18 @@ public class ChatGUI {
             }
         });
 
-
         // Create panel for message input and send message button to be inline.
         JPanel inputPanel = new JPanel(new BorderLayout());
 
-        // Create a panel to house the send button and the file upload button.
+        // Create a panel to house the send button
         JPanel sendInputControls = new JPanel(new BorderLayout());
 
         // Add the send button towards the east
         sendInputControls.add(sendButton, BorderLayout.EAST);
 
-
         // Add elements to the main input panel
         inputPanel.add(messageInputField, BorderLayout.CENTER);
         inputPanel.add(sendInputControls, BorderLayout.EAST);
-
 
         messageInputField.addActionListener(new ActionListener() {
             @Override
@@ -99,6 +93,7 @@ public class ChatGUI {
             messageInputField.setText("");
         }
     }
+
 
     public void addChatMessage (String message) {
         chatArea.append(message + "\n");

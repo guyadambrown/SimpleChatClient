@@ -3,6 +3,7 @@ package xyz.guyb;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class UserInteraction {
     private final ServerConnection serverConnection;
@@ -22,4 +23,5 @@ public class UserInteraction {
         chatGUI.addChatMessage (message);
 
     }
+
 }

@@ -2,6 +2,8 @@ package xyz.guyb;
 import javax.swing.*;
 import java.io.*;
 import java.net.*;
+import java.util.Base64;
+
 public class ServerConnection {
     private  Socket socket;
     private UserInteraction userInteraction;
@@ -28,6 +30,32 @@ public class ServerConnection {
         out.println(message);
     }
 
+    public void sendFile (File file) throws IOException {
+        // Open an input stream to read from the file
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        try {
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+            int fileSize = (int) file.length();
+            String filename = file.getName();
+            String encodedFileName = Base64.getEncoder().encodeToString(filename.getBytes());
+
+            out.println("/send " + fileSize + " " + encodedFileName);
+            out.flush();
+
+            // Create a byte buffer
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = bufferedInputStream.read(buffer)) > 0) {
+                socket.getOutputStream().write(buffer, 0, bytesRead);
+            }
+
+        } finally {
+            fileInputStream.close();
+        }
+
+    }
 
 
     public void startMessageReceiver(UserInteraction userInteraction, ChatGUI chatGUI){
