@@ -1,13 +1,9 @@
 package xyz.guyb;
-import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 
 public class ChatGUI {
@@ -24,6 +20,7 @@ public class ChatGUI {
         JFrame frame = new JFrame("Chat Client");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,500);
+        frame.setLocationRelativeTo(null);
 
         // Create chat area and disable editing.
         chatArea = new JTextArea();
@@ -78,7 +75,7 @@ public class ChatGUI {
         frame.add(inputPanel, BorderLayout.SOUTH);
 
         // Once all elements are added, show the window.
-        serverConnection.startMessageReceiver(userInteraction, this);
+        serverConnection.startMessageReceiver(userInteraction);
 
         frame.setVisible(true);
 

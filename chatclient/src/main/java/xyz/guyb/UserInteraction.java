@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class UserInteraction {
     private final ServerConnection serverConnection;
-    private ChatGUI chatGUI;
+    private final ChatGUI chatGUI;
 
     public UserInteraction(ServerConnection serverConnection, ChatGUI chatGUI) {
         this.serverConnection = serverConnection;

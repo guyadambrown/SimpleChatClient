@@ -3,15 +3,11 @@ package xyz.guyb;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ServerConnectionSettingsDialog extends JDialog {
 
-    private JTextField serverAddressField;
-    private JTextField serverPortField;
-    private JButton confirmButton;
-    private JButton cancelButton;
+    private final JTextField serverAddressField;
+    private final JTextField serverPortField;
 
     private String serverAddress;
     private int serverPort;
@@ -19,10 +15,8 @@ public class ServerConnectionSettingsDialog extends JDialog {
     public ServerConnectionSettingsDialog(Frame parent) {
 
         super(parent, "Connection settings", true);
-
-
         setSize(300,200);
-
+        setLocationRelativeTo(null);
 
         // Init components
         // Address
@@ -30,12 +24,12 @@ public class ServerConnectionSettingsDialog extends JDialog {
         JLabel serverAddressLabel = new JLabel("Address:");
 
         // Port
-        serverPortField = new JTextField("8081");
+        serverPortField = new JTextField("8089");
         JLabel serverPortLabel = new JLabel("Port:");
 
         // Action buttons
-        confirmButton = new JButton("Confirm");
-        cancelButton = new JButton("Cancel");
+        JButton confirmButton = new JButton("Confirm");
+        JButton cancelButton = new JButton("Cancel");
 
        JPanel addressPortContainer = new JPanel();
        JPanel addressContainer = new JPanel();
@@ -61,26 +55,18 @@ public class ServerConnectionSettingsDialog extends JDialog {
         add(buttonPanel, BorderLayout.SOUTH);
 
         // Add listeners
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (isValidInput()){
-                    serverAddress = serverAddressField.getText();
-                    serverPort = Integer.parseInt(serverPortField.getText());
-                    setVisible(false);
-
-                }else {
-                    JOptionPane.showMessageDialog(ServerConnectionSettingsDialog.this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+        confirmButton.addActionListener(actionEvent -> {
+            if (isValidInput()){
+                serverAddress = serverAddressField.getText();
+                serverPort = Integer.parseInt(serverPortField.getText());
                 setVisible(false);
+
+            }else {
+                JOptionPane.showMessageDialog(ServerConnectionSettingsDialog.this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
+
+        cancelButton.addActionListener(actionEvent -> setVisible(false));
 
 
     }
