@@ -1,4 +1,4 @@
-# Programming 4 - Java chat client 
+# SimpleChatClient
 
 A socket based chat client built with java and maven.
 
